@@ -1,0 +1,30 @@
+---
+# this comment is a hack
+version: "3.8"
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+     - WATCHTOWER_NOTIFICATIONS=slack
+     - WATCHTOWER_NOTIFICATIONS_LEVEL=info
+     - WATCHTOWER_NOTIFICATION_SLACK_CHANNEL=#notifications
+     - WATCHTOWER_CLEANUP=true
+     - WATCHTOWER_ROLLING_RESTART=true
+     - WATCHTOWER_NOTIFICATION_SLACK_HOOK_URL=/run/secrets/DISCORD_WEBHOOK_WATCHTOWER
+     - WATCHTOWER_POLL_INTERVAL=3600
+     - WATCHTOWER_WARN_ON_HEAD_FAILURE=never
+     - TZ=America/New_York
+    restart: unless-stopped
+    network_mode: "bridge"
+    deploy:
+      restart_policy:
+        condition: on-failure
+    secrets:
+      - DISCORD_WEBHOOK_WATCHTOWER
+
+# the secret is a discord webhook with /slack appended
+secrets:
+  DISCORD_WEBHOOK_WATCHTOWER:
+    external: true
