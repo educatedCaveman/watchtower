@@ -6,6 +6,7 @@ pipeline {
         WEBHOOK = credentials('JENKINS_DISCORD')
         PORTAINER_DEV_WEBHOOK = credentials('PORTAINER_WEBHOOK_DEV_WATCHTOWER')
         PORTAINER_PRD_WEBHOOK = credentials('PORTAINER_WEBHOOK_PRD_WATCHTOWER')
+    }
 
     //triggering periodically so the code is always present
     // run every friday at 3AM
